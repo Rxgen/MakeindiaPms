@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Password Reset</title>
+    <style>
+        * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #fff;
+  min-height: 100vh;
+}
+
+.reset-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Left Form Section */
+.form-section {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.logo img {
+  width: 100px;
+  margin-bottom: 30px;
+}
+
+.reset-box {
+  max-width: 400px;
+  width: 100%;
+}
+
+.reset-box h2 {
+  margin-bottom: 20px;
+  font-size: 26px;
+}
+
+.reset-box label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.reset-box input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.reset-box button {
+  width: 100%;
+  background: #6c33f8;
+  color: white;
+  padding: 14px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.reset-box p {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.reset-box a {
+  color: #6c33f8;
+  text-decoration: none;
+}
+
+/* Right Image Section */
+.image-section {
+  flex: 1;
+  background: #f0533a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-section img {
+  width: 80%;
+  max-width: 400px;
+}
+
+/* Floating Help Icon */
+.help-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #7c4dff;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 999;
+}
+
+
+
+.helpline-box {
+  position: relative;
+
+}
+
+.help-btn {
+  background-color: #7c4dff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.popup {
+  display: none;
+  position: absolute;
+  top: 80px;
+  right: 0;
+  width: 300px;
+  color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 100;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.popup.show {
+  display: block;
+}
+
+.popup h3 {
+  margin-bottom: 10px;
+}
+
+.popup p {
+  margin: 10px 0;
+}
+
+.popup button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: #ff8500;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ==========================
+   Responsive Design
+============================= */
+@media screen and (max-width: 768px) {
+  .reset-container {
+    flex-direction: column;
+  }
+
+  .image-section {
+    display: none;
+  }
+
+  .form-section {
+    padding: 20px;
+  }
+
+  .reset-box h2 {
+    font-size: 22px;
+  }
+
+  .help-btn {
+    padding: 10px;
+    font-size: 16px;
+  }
+}
+
+    </style>
+</head>
+<body>
+  <div class="reset-container">
+    
+    <!-- Left Section -->
+    <div class="form-section">
+      <div class="logo">
+        <img src="https://phpstack-715630-5107914.cloudwaysapps.com/assets/global/images/wBXcjWlVOr9NZGXTFhJb.png" alt="Logo" />
+      </div>
+
+      <div class="reset-box">
+        <h2>Password Reset</h2>
+        <form>
+          <label>Username or Email</label>
+          <input type="text" placeholder="Enter your username or email" required />
+
+          <button type="submit">✔ Reset Password</button>
+          <p>Already have an account? <a href="sign_in.html">Login here</a></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right Section (Image) -->
+    <div class="image-section">
+      <img src="https://img.freepik.com/free-vector/safe-login-concept-illustration_114360-7676.jpg" alt="Reset Illustration" />
+    </div>
+
+    <!-- Optional Helpline Icon -->
+    <div class="helpline-box">
+      <button class="help-btn" onclick="togglePopup()">📞 HELP</button>
+      <div class="popup" id="popup">
+        <h3>HELPLINE</h3>
+        <p>If you are facing any problem in completing online onboarding, please contact our troubleshooter</p>
+        <p><strong>Mr. Vilas Sonkusare</strong><br/>+91 80808 20339</p>
+        <p><strong>Sumit Panwar</strong><br/>8668592985</p>
+        <p><strong>Mayuri Kadu</strong><br/>7972314189</p>
+        <button onclick="togglePopup()">Close</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    function togglePopup() {
+      document.getElementById("popup").classList.toggle("show");
+    }
+  </script>
+</body>
+</html>

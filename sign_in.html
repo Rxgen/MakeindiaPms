@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Page</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+   * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #fff;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Header with logo and help */
+.header {
+    width:100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Logo */
+.logo img {
+  max-width: 250px;
+  height: 150px;
+}
+
+
+/* Helpline Box */
+.helpline-box {
+  position: relative;
+
+}
+
+.help-btn {
+  background-color: #7c4dff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.popup {
+  display: none;
+  position: absolute;
+  top: 80px;
+  right: 0;
+  width: 300px;
+  color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 100;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.popup.show {
+  display: block;
+}
+
+.popup h3 {
+  margin-bottom: 10px;
+}
+
+.popup p {
+  margin: 10px 0;
+}
+
+.popup button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: #ff8500;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Login Box */
+
+.login-box {
+    width: 100%;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.login-box h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.login-box form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-box label {
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"] {
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.login-box button[type="submit"] {
+  background-color: #6c33f8;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-box a {
+  color: #6c33f8;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* =====================
+   Responsive Queries
+======================== */
+@media screen and (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .popup {
+    width: 50vw;
+    left: 5px;
+    
+  }
+.helpline-box{
+  padding-bottom:20px;
+}
+  .login-box {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .login-box h2 {
+    font-size: 20px;
+  }
+
+  .help-btn {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left Logo -->
+     <div class="header">
+    <div class="logo">
+      <img src="https://phpstack-715630-5107914.cloudwaysapps.com/assets/global/images/wBXcjWlVOr9NZGXTFhJb.png" alt="Company Logo" />
+    </div>
+
+    <div class="helpline-box">
+      <button class="help-btn" onclick="togglePopup()">📞 HELP</button>
+      <div class="popup" id="popup">
+        <h3>HELPLINE</h3>
+        <p>If you are facing any problem in completing online onboarding, please contact our troubleshooter</p>
+        <p><strong>Mr. Vilas Sonkusare</strong><br/>+91 80808 20339</p>
+        <p><strong>Sumit Panwar</strong><br/>8668592985</p>
+        <p><strong>Mayuri Kadu</strong><br/>7972314189</p>
+        <button onclick="togglePopup()">Close</button>
+      </div>
+    </div>
+    </div>
+    <!-- Login Form -->
+    <div class="login-box" id="login-box">
+      <h2>Welcome back!</h2>
+      <form>
+        <label>Email Or Username</label>
+        <input type="text" placeholder="Enter Email or Username" />
+        
+        <label>Password</label>
+        <input type="password" placeholder="Enter Password" />
+        
+        <div class="options">
+          <label><input type="checkbox" /> Remember me</label>
+          <a href="reset.html">Forget Password</a>
+        </div>
+
+        <button type="submit">Sign in</button>
+        <p>Don't have an account? <a href="sign_up.html">Create account</a></p>
+      </form>
+    </div>
+
+    <!-- Helpline Box -->
+    
+  </div>
+
+  <script>
+    function togglePopup() {
+      document.getElementById("popup").classList.toggle("show");
+    }
+  </script>
+</body>
+</html>
