@@ -14,15 +14,13 @@ function showSlide(index) {
   if (!slides.length) {
     return;
   }
-  const track = document.querySelector(".slides");
-  slides.forEach((slide) => {
+  slides.forEach((slide, i) => {
     slide.classList.remove("active");
-    slide.style.display = "";
+    slide.style.display = "none";
   });
+
   slides[index].classList.add("active");
-  if (track) {
-    track.style.transform = "translateX(-" + index * 100 + "%)";
-  }
+  slides[index].style.display = "block";
 }
 
 function nextSlide() {

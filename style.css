@@ -39,13 +39,6 @@ body {
   font-size: 20px;
   color: #fff;
   cursor: pointer;
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .hamburger {
-    display: inline;
-  }
 }
 
 /* Header */
@@ -64,18 +57,7 @@ body {
 }
 
 .header-inner {
-  flex-wrap: nowrap;
-  gap: 16px;
-}
-
-.header-inner .logo {
-  flex: 0 0 auto;
-}
-
-.header-inner .navbar {
-  flex: 1 1 auto;
-  display: flex;
-  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 .contact-info {
@@ -138,15 +120,6 @@ body {
 @media (max-width: 768px) {
   .contact-info {
     display: none;
-  }
-
-  .header-inner {
-    flex-wrap: wrap;
-  }
-
-  .header-inner .navbar {
-    width: 100%;
-    justify-content: flex-start;
   }
 
   .navbar {

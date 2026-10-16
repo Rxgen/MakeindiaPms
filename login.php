@@ -14,7 +14,7 @@ $error = isset($_GET['error']) ? 'Invalid username or password.' : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login | MAKE IN INDIA CAPITAL PMS</title>
-    <link rel="stylesheet" href="/client_portal.css?v=20261016a">
+    <link rel="stylesheet" href="client_portal.css">
 </head>
 <body class="pms-portal">
     <div class="pms-login">

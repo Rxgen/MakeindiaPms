@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Login | MAKE IN INDIA CAPITAL PMS</title>
-    <link rel="stylesheet" href="/client_portal.css?v=20261016a">
+    <link rel="stylesheet" href="client_portal.css">
 </head>
 <body class="pms-portal">
     <div class="pms-login">
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 First-time login password: <strong><?= pms_h(pms_default_password()) ?></strong><br>
                 After login you can change this password. Your admin can also view the current password.
             </p>
-            <a class="pms-muted" href="/index.php">Back to website</a>
+            <a class="pms-muted" href="index.html">Back to website</a>
         </div>
     </div>
 </body>

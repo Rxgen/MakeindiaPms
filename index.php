@@ -14,7 +14,7 @@ require __DIR__ . '/includes/site_head.php';
       <div class="slide">
         <picture>
           <source media="(max-width: 768px)" srcset="<?= pms_h(pms_url('img/9.jpg')) ?>">
-          <img src="<?= pms_h(pms_url('img/9.jpg')) ?>" alt="Portfolio management">
+          <img src="<?= pms_h(pms_url('img/9.jpeg')) ?>" alt="Portfolio management">
         </picture>
       </div>
       <div class="slide">

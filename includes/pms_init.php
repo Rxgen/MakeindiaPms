@@ -1119,12 +1119,7 @@ function pms_import_intake_clients($mysqli)
     }
 }
 
-try {
-    pms_ensure_schema($mysqli);
-    pms_seed_demo_if_empty($mysqli);
-    pms_sync_master_register($mysqli);
-    pms_import_intake_clients($mysqli);
-} catch (Throwable $e) {
-    // Do not white-screen the whole portal if one bootstrap step fails.
-    error_log('PMS bootstrap error: ' . $e->getMessage());
-}
+pms_ensure_schema($mysqli);
+pms_seed_demo_if_empty($mysqli);
+pms_sync_master_register($mysqli);
+pms_import_intake_clients($mysqli);

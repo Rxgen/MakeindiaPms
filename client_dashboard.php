@@ -83,10 +83,10 @@ $chartJson = json_encode($chartPayload, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_A
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Portfolio Portal | MAKE IN INDIA CAPITAL PMS</title>
-    <link rel="stylesheet" href="/style.css?v=20261016a" />
+    <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="/client_portal.css?v=20261016a">
-    <script defer src="/script.js?v=20261016a"></script>
+    <link rel="stylesheet" href="client_portal.css">
+    <script defer src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body class="pms-portal">

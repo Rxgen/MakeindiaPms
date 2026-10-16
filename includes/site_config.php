@@ -16,11 +16,6 @@ if (!defined('PMS_WEB_BASE')) {
     define('PMS_WEB_BASE', '');
 }
 
-/** Bump this after CSS/JS uploads so browsers/CDN drop old cached files. */
-if (!defined('PMS_ASSET_VERSION')) {
-    define('PMS_ASSET_VERSION', '20261016a');
-}
-
 function pms_base_path()
 {
     return rtrim((string) PMS_WEB_BASE, '/');
@@ -44,12 +39,6 @@ function pms_absolute_url($path = '')
     $scheme = $https ? 'https' : 'http';
     $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'makeindiapms.com';
     return $scheme . '://' . $host . pms_url($path);
-}
-
-/** CSS/JS URL with cache-buster (always root-absolute). */
-function pms_asset($path)
-{
-    return pms_url($path) . '?v=' . rawurlencode((string) PMS_ASSET_VERSION);
 }
 
 if (!function_exists('pms_h')) {
