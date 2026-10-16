@@ -9,9 +9,7 @@ if (!isset($pms_header_folio)) {
 ?>
   <div class="topbar">
     <div class="container">
-      <div class="topbar-left">
-        <a href="javascript:;" class="hamburger" id="menuToggle" aria-label="Menu"><i class="fas fa-bars"></i></a>
-      </div>
+      <div class="topbar-left"></div>
       <div class="topbar-right">
         <?php if ($pmsClientIn): ?>
           <?php
@@ -37,7 +35,15 @@ if (!isset($pms_header_folio)) {
           <img src="<?= pms_h(pms_url('img/makeindia2.png')) ?>" alt="Make in India Capital PMS" />
         </a>
       </div>
+      <a href="javascript:;" class="hamburger" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="navbar">
+        <i class="fas fa-bars"></i>
+      </a>
+      <div class="nav-overlay" id="navOverlay" hidden></div>
       <nav class="navbar" id="navbar">
+        <div class="nav-drawer-head">
+          <strong>Menu</strong>
+          <button type="button" class="nav-close" id="menuClose" aria-label="Close menu">&times;</button>
+        </div>
         <ul>
           <li><a href="<?= pms_h(pms_url('index.php')) ?>">Home</a></li>
           <li class="has-submenu">

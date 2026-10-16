@@ -44,7 +44,8 @@ $pmsNav = array(
             <h1><?= pms_h($pms_admin_title) ?> <em>PMS</em></h1>
             <div>
                 Welcome, <?= pms_h($pmsAdminUser) ?>
-                <a class="btn-ghost ms-3" href="logout.php">Logout</a>
+                <a class="btn-ghost ms-3" href="admin_change_password.php">Change Password</a>
+                <a class="btn-ghost ms-2" href="logout.php">Logout</a>
             </div>
         </div>
         <div class="pms-admin-content">

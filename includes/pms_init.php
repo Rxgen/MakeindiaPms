@@ -1119,7 +1119,51 @@ function pms_import_intake_clients($mysqli)
     }
 }
 
-pms_ensure_schema($mysqli);
-pms_seed_demo_if_empty($mysqli);
-pms_sync_master_register($mysqli);
-pms_import_intake_clients($mysqli);
+/**
+ * Ensure admin login user exists (email-based).
+ * Does not overwrite password if the admin email already exists.
+ */
+function pms_ensure_admin_account($mysqli)
+{
+    static $done = false;
+    if ($done) {
+        return;
+    }
+    $done = true;
+
+    $mysqli->query("CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(100) NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        UNIQUE KEY username (username)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+
+    $adminEmail = 'ashishu1809@gmail.com';
+    $defaultPass = md5('Pms@2026');
+
+    // Remove legacy simple admin login.
+    $mysqli->query("DELETE FROM users WHERE username = 'admin'");
+
+    $stmt = $mysqli->prepare('SELECT id FROM users WHERE username = ? LIMIT 1');
+    $stmt->bind_param('s', $adminEmail);
+    $stmt->execute();
+    $existing = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if (!$existing) {
+        $ins = $mysqli->prepare('INSERT INTO users (username, password) VALUES (?, ?)');
+        $ins->bind_param('ss', $adminEmail, $defaultPass);
+        $ins->execute();
+        $ins->close();
+    }
+}
+
+try {
+    pms_ensure_schema($mysqli);
+    pms_seed_demo_if_empty($mysqli);
+    pms_sync_master_register($mysqli);
+    pms_import_intake_clients($mysqli);
+    pms_ensure_admin_account($mysqli);
+} catch (Throwable $e) {
+    error_log('PMS bootstrap error: ' . $e->getMessage());
+}
