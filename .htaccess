@@ -1,0 +1,18 @@
+# Default homepage
+DirectoryIndex index.php index.html
+
+RewriteEngine On
+
+# Prefer non-www
+RewriteCond %{HTTP_HOST} ^www\.makeindiapms\.com$ [NC]
+RewriteRule ^(.*)$ https://makeindiapms.com/$1 [L,R=301]
+
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Legacy HTML → dynamic PHP pages
+RewriteRule ^index\.html$ /index.php [L,R=301]
+RewriteRule ^about\.html$ /about.php [L,R=301]
+RewriteRule ^who-should-invest\.html$ /who-should-invest.php [L,R=301]
+RewriteRule ^investment-philosophy\.html$ /investment-philosophy.php [L,R=301]
