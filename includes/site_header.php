@@ -7,45 +7,23 @@ if (!isset($pms_header_folio)) {
     $pms_header_folio = $pmsClientIn && !empty($_SESSION['client_folio_number']) ? $_SESSION['client_folio_number'] : '';
 }
 ?>
-  <div class="topbar">
-    <div class="container">
-      <div class="topbar-left"></div>
-      <div class="topbar-right">
-        <?php if ($pmsClientIn): ?>
-          <?php
-          $pmsFolioNo = !empty($pms_header_folio) ? $pms_header_folio : (isset($_SESSION['client_folio_number']) ? $_SESSION['client_folio_number'] : '');
-          ?>
-          Welcome, <?= pms_h($pmsClientNm) ?>
-          <?php if ($pmsFolioNo !== ''): ?>
-            | Folio No: <?= pms_h($pmsFolioNo) ?>
-          <?php endif; ?>
-          | <a href="<?= pms_h(pms_url('client_logout.php')) ?>"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        <?php else: ?>
-          <a href="<?= pms_h(pms_url('client_login.php')) ?>"><i class="fas fa-sign-in-alt"></i> Client Login</a> |
-          <a href="<?= pms_h(pms_url('login.php')) ?>"><i class="fas fa-user-shield"></i> Admin Login</a>
-        <?php endif; ?>
-      </div>
-    </div>
-  </div>
-
   <header class="main-header">
     <div class="container header-inner">
-      <div class="logo">
-        <a href="<?= pms_h(pms_url('index.php')) ?>">
-          <img src="<?= pms_h(pms_url('img/makeindia2.png')) ?>" alt="Make in India Capital PMS" />
-        </a>
+      <div class="header-left">
+        <div class="logo">
+          <a href="<?= pms_h(pms_url('index.php')) ?>" aria-label="Home">
+            <img src="<?= pms_h(pms_url('img/makeindia2.png')) ?>" alt="Make in India Capital PMS" />
+          </a>
+        </div>
       </div>
-      <a href="javascript:;" class="hamburger" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="navbar">
-        <i class="fas fa-bars"></i>
-      </a>
+
       <div class="nav-overlay" id="navOverlay" hidden></div>
-      <nav class="navbar" id="navbar">
+      <nav class="navbar" id="navbar" aria-label="Main">
         <div class="nav-drawer-head">
           <strong>Menu</strong>
           <button type="button" class="nav-close" id="menuClose" aria-label="Close menu">&times;</button>
         </div>
         <ul>
-          <li><a href="<?= pms_h(pms_url('index.php')) ?>">Home</a></li>
           <li class="has-submenu">
             <a href="<?= pms_h(pms_url('about.php')) ?>">About</a>
             <ul class="submenu">
@@ -63,5 +41,24 @@ if (!isset($pms_header_folio)) {
           <?php endif; ?>
         </ul>
       </nav>
+
+      <div class="header-right" id="authBar">
+        <?php if ($pmsClientIn): ?>
+          <?php
+          $pmsFolioNo = !empty($pms_header_folio) ? $pms_header_folio : (isset($_SESSION['client_folio_number']) ? $_SESSION['client_folio_number'] : '');
+          ?>
+          <span class="auth-welcome">Welcome, <?= pms_h($pmsClientNm) ?></span>
+          <?php if ($pmsFolioNo !== ''): ?>
+            <span class="auth-folio">Folio: <?= pms_h($pmsFolioNo) ?></span>
+          <?php endif; ?>
+          <a class="btn-auth btn-auth-outline" href="<?= pms_h(pms_url('client_logout.php')) ?>"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <?php else: ?>
+          <a class="btn-auth btn-auth-outline" href="<?= pms_h(pms_url('client_login.php')) ?>"><i class="fas fa-sign-in-alt"></i> Client Login</a>
+          <a class="btn-auth btn-auth-outline" href="<?= pms_h(pms_url('login.php')) ?>"><i class="fas fa-user-shield"></i> Admin Login</a>
+        <?php endif; ?>
+        <a href="javascript:;" class="hamburger" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="navbar">
+          <i class="fas fa-bars"></i>
+        </a>
+      </div>
     </div>
   </header>

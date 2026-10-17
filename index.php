@@ -3,27 +3,33 @@ $page_title = 'Make in India Capital PMS';
 require __DIR__ . '/includes/site_head.php';
 ?>
 
-  <div class="slider">
+  <div class="slider" id="homeSlider" aria-roledescription="carousel">
     <div class="slides">
       <div class="slide active">
         <picture>
-          <source media="(max-width: 768px)" srcset="<?= pms_h(pms_url('img/1.jpg')) ?>">
-          <img src="<?= pms_h(pms_url('img/1.jpg')) ?>" alt="Make in India Capital PMS">
+          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/8.jpg')) ?>">
+          <source media="(max-width: 1024px)" srcset="<?= pms_h(pms_url('img/10.jpg')) ?>">
+          <img src="<?= pms_h(pms_url('img/1.jpg')) ?>" alt="Make in India Capital PMS" loading="eager">
         </picture>
       </div>
       <div class="slide">
         <picture>
-          <source media="(max-width: 768px)" srcset="<?= pms_h(pms_url('img/9.jpg')) ?>">
-          <img src="<?= pms_h(pms_url('img/9.jpeg')) ?>" alt="Portfolio management">
+          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/5.jpg')) ?>">
+          <source media="(max-width: 1024px)" srcset="<?= pms_h(pms_url('img/11.jpg')) ?>">
+          <img src="<?= pms_h(pms_url('img/9.jpg')) ?>" alt="Portfolio management" loading="lazy">
         </picture>
       </div>
       <div class="slide">
         <picture>
-          <source media="(max-width: 768px)" srcset="<?= pms_h(pms_url('img/11.jpg')) ?>">
-          <img src="<?= pms_h(pms_url('img/11.jpg')) ?>" alt="Small cap investing">
+          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/10.jpg')) ?>">
+          <source media="(max-width: 1024px)" srcset="<?= pms_h(pms_url('img/8.jpg')) ?>">
+          <img src="<?= pms_h(pms_url('img/11.jpg')) ?>" alt="Small cap investing" loading="lazy">
         </picture>
       </div>
     </div>
+    <button type="button" class="prev" id="slidePrev" aria-label="Previous slide">&#10094;</button>
+    <button type="button" class="next" id="slideNext" aria-label="Next slide">&#10095;</button>
+    <div class="slider-dots" id="sliderDots" aria-hidden="true"></div>
   </div>
 
   <section class="stats-section">

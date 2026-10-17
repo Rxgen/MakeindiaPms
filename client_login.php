@@ -34,40 +34,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+require_once __DIR__ . '/includes/site_config.php';
+$page_title = 'Client Login | Make in India Capital PMS';
+$body_class = 'pms-portal';
+$extra_css = array(pms_asset('client_portal.css'));
+require __DIR__ . '/includes/site_head.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Login | MAKE IN INDIA CAPITAL PMS</title>
-    <link rel="stylesheet" href="client_portal.css">
-</head>
-<body class="pms-portal">
-    <div class="pms-login">
-        <div class="pms-login-box">
-            <h1>MAKE IN INDIA CAPITAL <span style="color:#CC0000">PMS</span></h1>
-            <p>Login with your registered email and password.</p>
 
-            <?php if ($error): ?><div class="pms-alert"><?= pms_h($error) ?></div><?php endif; ?>
-            <?php if ($info): ?><div class="pms-ok"><?= pms_h($info) ?></div><?php endif; ?>
+<section class="page-content login-page">
+  <div class="pms-login pms-login-embedded">
+    <div class="pms-login-box">
+      <h1>MAKE IN INDIA CAPITAL <span style="color:#CC0000">PMS</span></h1>
+      <p>Login with your registered email and password.</p>
 
-            <form method="POST" action="client_login.php">
-                <label for="email">Registered Email</label>
-                <input type="email" id="email" name="email" required placeholder="your@email.com" autocomplete="username" value="<?= isset($_POST['email']) ? pms_h($_POST['email']) : '' ?>">
+      <?php if ($error): ?><div class="pms-alert"><?= pms_h($error) ?></div><?php endif; ?>
+      <?php if ($info): ?><div class="pms-ok"><?= pms_h($info) ?></div><?php endif; ?>
 
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required placeholder="Enter password" autocomplete="current-password">
+      <form method="POST" action="client_login.php">
+        <label for="email">Registered Email</label>
+        <input type="email" id="email" name="email" required placeholder="your@email.com" autocomplete="username" value="<?= isset($_POST['email']) ? pms_h($_POST['email']) : '' ?>">
 
-                <button class="pms-btn" type="submit">Login</button>
-            </form>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required placeholder="Enter password" autocomplete="current-password">
 
-            <p class="pms-muted" style="margin-top:14px; text-align:left;">
-                First-time login password: <strong><?= pms_h(pms_default_password()) ?></strong><br>
-                After login you can change this password. Your admin can also view the current password.
-            </p>
-            <a class="pms-muted" href="index.html">Back to website</a>
-        </div>
+        <button class="pms-btn" type="submit">Login</button>
+      </form>
+
+      <p class="pms-muted" style="margin-top:14px; text-align:left;">
+        First-time login password: <strong><?= pms_h(pms_default_password()) ?></strong><br>
+        After login you can change this password. Your admin can also view the current password.
+      </p>
     </div>
-</body>
-</html>
+  </div>
+</section>
+
+<?php require __DIR__ . '/includes/site_foot.php'; ?>

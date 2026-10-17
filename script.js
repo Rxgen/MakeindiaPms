@@ -98,54 +98,124 @@ if (toggleBtn && nav) {
   });
 }
 
-let currentSlide = 0;
-const slides = document.querySelectorAll(".slide");
-
-function showSlide(index) {
-  if (!slides.length) {
+/* Smooth homepage slider */
+(function initHomeSlider() {
+  const slider = document.getElementById("homeSlider") || document.querySelector(".slider");
+  if (!slider) {
     return;
   }
-  const track = document.querySelector(".slides");
-  slides.forEach((slide) => {
-    slide.classList.remove("active");
-    slide.style.display = "";
-  });
-  slides[index].classList.add("active");
-  if (track) {
-    track.style.transform = "translateX(-" + index * 100 + "%)";
-  }
-}
 
-function nextSlide() {
-  if (!slides.length) {
+  const track = slider.querySelector(".slides");
+  const slides = slider.querySelectorAll(".slide");
+  const prevBtn = document.getElementById("slidePrev") || slider.querySelector(".prev");
+  const nextBtn = document.getElementById("slideNext") || slider.querySelector(".next");
+  const dotsWrap = document.getElementById("sliderDots") || slider.querySelector(".slider-dots");
+  if (!track || !slides.length) {
     return;
   }
-  currentSlide = (currentSlide + 1) % slides.length;
-  showSlide(currentSlide);
-}
 
-function prevSlide() {
-  if (!slides.length) {
-    return;
+  let current = 0;
+  let timer = null;
+  const delay = 4500;
+  const dots = [];
+
+  if (dotsWrap) {
+    dotsWrap.innerHTML = "";
+    slides.forEach((_, i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.setAttribute("aria-label", "Go to slide " + (i + 1));
+      btn.addEventListener("click", () => {
+        goTo(i);
+        restart();
+      });
+      dotsWrap.appendChild(btn);
+      dots.push(btn);
+    });
   }
-  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-  showSlide(currentSlide);
-}
 
-if (slides.length) {
-  showSlide(currentSlide);
-  setInterval(nextSlide, 2000);
-}
+  function goTo(index) {
+    current = (index + slides.length) % slides.length;
+    track.style.transform = "translateX(-" + current * 100 + "%)";
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === current);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === current);
+    });
+  }
 
-const topbarRight = document.querySelector(".topbar-right");
-if (topbarRight) {
+  function next() {
+    goTo(current + 1);
+  }
+
+  function prev() {
+    goTo(current - 1);
+  }
+
+  function restart() {
+    clearInterval(timer);
+    timer = setInterval(next, delay);
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      prev();
+      restart();
+    });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      next();
+      restart();
+    });
+  }
+
+  slider.addEventListener("mouseenter", () => clearInterval(timer));
+  slider.addEventListener("mouseleave", restart);
+
+  let touchStartX = 0;
+  slider.addEventListener(
+    "touchstart",
+    (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    },
+    { passive: true }
+  );
+  slider.addEventListener(
+    "touchend",
+    (e) => {
+      const dx = e.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(dx) < 40) {
+        return;
+      }
+      if (dx < 0) {
+        next();
+      } else {
+        prev();
+      }
+      restart();
+    },
+    { passive: true }
+  );
+
+  goTo(0);
+  restart();
+})();
+
+const authBar = document.getElementById("authBar") || document.querySelector(".header-right");
+if (authBar) {
   fetch("/client_session_bar.php", { credentials: "same-origin" })
     .then((r) => (r.ok ? r.text() : ""))
     .then((html) => {
       if (!html) {
         return;
       }
-      topbarRight.innerHTML = html;
+      const burger = document.getElementById("menuToggle");
+      authBar.innerHTML = html;
+      if (burger) {
+        authBar.appendChild(burger);
+      }
       const loggedIn = html.indexOf("client_logout.php") !== -1;
       const navUl = document.querySelector("#navbar > ul");
       if (navUl) {

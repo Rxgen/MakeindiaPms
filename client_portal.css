@@ -313,6 +313,12 @@ body.pms-portal .main-header .container {
   padding: 20px;
 }
 
+.pms-login-embedded {
+  min-height: auto;
+  background: transparent;
+  padding: 10px 20px 40px;
+}
+
 .pms-login-box {
   width: 100%;
   max-width: 420px;
