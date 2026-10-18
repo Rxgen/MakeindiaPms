@@ -1,5 +1,6 @@
 <?php
 $page_title = 'Make in India Capital PMS';
+$body_class = 'page-home';
 require __DIR__ . '/includes/site_head.php';
 ?>
 
@@ -7,24 +8,31 @@ require __DIR__ . '/includes/site_head.php';
     <div class="slides">
       <div class="slide active">
         <picture>
-          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/8.jpg')) ?>">
-          <source media="(max-width: 1024px)" srcset="<?= pms_h(pms_url('img/10.jpg')) ?>">
-          <img src="<?= pms_h(pms_url('img/1.jpg')) ?>" alt="Make in India Capital PMS" loading="eager">
+          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/hero-mobile-1.jpg')) ?>">
+          <img src="<?= pms_h(pms_url('img/hero-desktop-1.jpg')) ?>" alt="Make in India Capital PMS" loading="eager">
         </picture>
       </div>
       <div class="slide">
         <picture>
-          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/5.jpg')) ?>">
-          <source media="(max-width: 1024px)" srcset="<?= pms_h(pms_url('img/11.jpg')) ?>">
-          <img src="<?= pms_h(pms_url('img/9.jpg')) ?>" alt="Portfolio management" loading="lazy">
+          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/hero-mobile-2.jpg')) ?>">
+          <img src="<?= pms_h(pms_url('img/hero-desktop-2.jpg')) ?>" alt="Portfolio management" loading="lazy">
         </picture>
       </div>
       <div class="slide">
         <picture>
-          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/10.jpg')) ?>">
-          <source media="(max-width: 1024px)" srcset="<?= pms_h(pms_url('img/8.jpg')) ?>">
-          <img src="<?= pms_h(pms_url('img/11.jpg')) ?>" alt="Small cap investing" loading="lazy">
+          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/hero-mobile-3.jpg')) ?>">
+          <img src="<?= pms_h(pms_url('img/hero-desktop-3.jpg')) ?>" alt="Long-term investing" loading="lazy">
         </picture>
+      </div>
+    </div>
+    <div class="slider-scrim"></div>
+    <div class="slider-copy">
+      <p class="slider-kicker">SEBI Registered PMS · INP000006554</p>
+      <h1>Make in India Capital <em>PMS</em></h1>
+      <p class="slider-lead">Patient small-cap investing built on research, promoter skin in the game, and long-term compounding.</p>
+      <div class="slider-actions">
+        <a class="btn-hero" href="<?= pms_h(pms_url('client_login.php')) ?>">Client Login</a>
+        <a class="btn-hero-ghost" href="<?= pms_h(pms_url('about.php')) ?>">About us</a>
       </div>
     </div>
     <button type="button" class="prev" id="slidePrev" aria-label="Previous slide">&#10094;</button>
@@ -32,29 +40,31 @@ require __DIR__ . '/includes/site_head.php';
     <div class="slider-dots" id="sliderDots" aria-hidden="true"></div>
   </div>
 
-  <section class="stats-section">
-    <h2 class="stats-title">Capital + Knowledge + Patience = Fortune</h2>
-    <div class="stats-container">
-      <div class="stat-box">
-        <i class="fas fa-coins"></i>
-        <h3><span class="currency">₹</span>770<span class="unit">Cr</span></h3>
-        <div class="line"></div>
-        <p>AUM</p>
+  <section class="stats-section" style="--stats-bg: url('<?= pms_h(pms_url('img/hero-desktop-3.jpg')) ?>')">
+    <div class="stats-section-inner">
+      <div class="stats-band-head">
+        <p class="section-kicker light">At a glance</p>
+        <h2 class="stats-title">Capital + Knowledge + Patience = Fortune</h2>
       </div>
-      <div class="stat-box">
-        <i class="fas fa-chart-line"></i>
-        <h3>100<span class="unit">%</span></h3>
-        <div class="line"></div>
-        <p>Equity Fund</p>
+      <div class="stats-row" role="list">
+        <article class="stat-card" role="listitem">
+          <span class="stat-icon" aria-hidden="true"><i class="fas fa-coins"></i></span>
+          <p class="stat-value"><span class="currency">₹</span>770<span class="unit">Cr</span></p>
+          <p class="stat-label">Assets under management</p>
+        </article>
+        <article class="stat-card" role="listitem">
+          <span class="stat-icon" aria-hidden="true"><i class="fas fa-chart-line"></i></span>
+          <p class="stat-value">100<span class="unit">%</span></p>
+          <p class="stat-label">Equity focused</p>
+        </article>
+        <article class="stat-card" role="listitem">
+          <span class="stat-icon" aria-hidden="true"><i class="fas fa-users"></i></span>
+          <p class="stat-value">557</p>
+          <p class="stat-label">Investors</p>
+        </article>
       </div>
-      <div class="stat-box">
-        <i class="fas fa-address-book"></i>
-        <h3>557</h3>
-        <div class="line"></div>
-        <p>Investors</p>
-      </div>
+      <p class="as-on">*As on 20 July 2025</p>
     </div>
-    <p class="as-on">*As on 20 July 2025</p>
   </section>
 
   <section class="home-intro">
@@ -81,18 +91,22 @@ require __DIR__ . '/includes/site_head.php';
       <h2>Our USP</h2>
       <div class="home-card-grid">
         <article class="home-card">
+          <span class="card-num">01</span>
           <h3>Research first</h3>
           <p>Plant visits, AGMs and channel checks across the country, not a model-portfolio approach.</p>
         </article>
         <article class="home-card">
+          <span class="card-num">02</span>
           <h3>Skin in the game</h3>
           <p>Over a third of AUM belongs to the promoters. Incentives stay aligned with clients.</p>
         </article>
         <article class="home-card">
+          <span class="card-num">03</span>
           <h3>Bespoke portfolios</h3>
           <p>Every investor has a unique portfolio. We do not run one model book for everyone.</p>
         </article>
         <article class="home-card">
+          <span class="card-num">04</span>
           <h3>Simple fee idea</h3>
           <p>No upfront fixed fee, entry load or exit load. We charge after investors earn over 10% p.a.</p>
         </article>

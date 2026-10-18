@@ -20,7 +20,10 @@ if (!isset($pms_header_folio)) {
       <div class="nav-overlay" id="navOverlay" hidden></div>
       <nav class="navbar" id="navbar" aria-label="Main">
         <div class="nav-drawer-head">
-          <strong>Menu</strong>
+          <div>
+            <strong>Make in India Capital</strong>
+            <span>Navigate</span>
+          </div>
           <button type="button" class="nav-close" id="menuClose" aria-label="Close menu">&times;</button>
         </div>
         <ul>
@@ -31,7 +34,7 @@ if (!isset($pms_header_folio)) {
               <li><a href="<?= pms_h(pms_url('who-should-invest.php')) ?>">Who Should Invest</a></li>
             </ul>
           </li>
-          <li><a href="<?= pms_h(pms_url('investment-philosophy.php')) ?>">Investment Philosophy</a></li>
+          <li><a href="<?= pms_h(pms_url('investment-philosophy.php')) ?>">Philosophy</a></li>
           <li><a href="<?= pms_h(pms_url('performance/')) ?>">Performance</a></li>
           <li><a href="<?= pms_h(pms_url('team/')) ?>">Team</a></li>
           <li><a href="<?= pms_h(pms_url('faq/')) ?>">FAQs</a></li>
@@ -51,10 +54,10 @@ if (!isset($pms_header_folio)) {
           <?php if ($pmsFolioNo !== ''): ?>
             <span class="auth-folio">Folio: <?= pms_h($pmsFolioNo) ?></span>
           <?php endif; ?>
-          <a class="btn-auth btn-auth-outline" href="<?= pms_h(pms_url('client_logout.php')) ?>"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          <a class="btn-auth btn-auth-outline" href="<?= pms_h(pms_url('client_logout.php')) ?>"><i class="fas fa-sign-out-alt"></i> <span class="btn-label">Logout</span></a>
         <?php else: ?>
-          <a class="btn-auth btn-auth-outline" href="<?= pms_h(pms_url('client_login.php')) ?>"><i class="fas fa-sign-in-alt"></i> Client Login</a>
-          <a class="btn-auth btn-auth-outline" href="<?= pms_h(pms_url('login.php')) ?>"><i class="fas fa-user-shield"></i> Admin Login</a>
+          <a class="btn-auth btn-auth-solid" href="<?= pms_h(pms_url('client_login.php')) ?>"><i class="fas fa-sign-in-alt"></i> <span class="btn-label">Client Login</span></a>
+          <a class="btn-auth btn-auth-outline" href="<?= pms_h(pms_url('login.php')) ?>"><i class="fas fa-user-shield"></i> <span class="btn-label">Admin</span></a>
         <?php endif; ?>
         <a href="javascript:;" class="hamburger" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="navbar">
           <i class="fas fa-bars"></i>

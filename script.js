@@ -2,6 +2,17 @@ const toggleBtn = document.getElementById("menuToggle");
 const closeBtn = document.getElementById("menuClose");
 const nav = document.getElementById("navbar");
 const overlay = document.getElementById("navOverlay");
+const siteHeader = document.querySelector(".main-header");
+
+function updateHeaderScroll() {
+  if (!siteHeader) {
+    return;
+  }
+  siteHeader.classList.toggle("is-scrolled", window.scrollY > 12);
+}
+
+updateHeaderScroll();
+window.addEventListener("scroll", updateHeaderScroll, { passive: true });
 
 function isMobileNav() {
   return window.matchMedia("(max-width: 992px)").matches;

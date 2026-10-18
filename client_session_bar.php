@@ -12,8 +12,8 @@ if (!empty($_SESSION['client_id']) && !empty($_SESSION['client_name'])) {
     if ($folio !== '') {
         echo '<span class="auth-folio">Folio: ' . $folio . '</span>';
     }
-    echo '<a class="btn-auth btn-auth-outline" href="/client_logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>';
+    echo '<a class="btn-auth btn-auth-outline" href="/client_logout.php"><i class="fas fa-sign-out-alt"></i> <span class="btn-label">Logout</span></a>';
 } else {
-    echo '<a class="btn-auth btn-auth-outline" href="/client_login.php"><i class="fas fa-sign-in-alt"></i> Client Login</a>';
-    echo '<a class="btn-auth btn-auth-outline" href="/login.php"><i class="fas fa-user-shield"></i> Admin Login</a>';
+    echo '<a class="btn-auth btn-auth-solid" href="/client_login.php"><i class="fas fa-sign-in-alt"></i> <span class="btn-label">Client Login</span></a>';
+    echo '<a class="btn-auth btn-auth-outline" href="/login.php"><i class="fas fa-user-shield"></i> <span class="btn-label">Admin</span></a>';
 }

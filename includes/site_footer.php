@@ -11,9 +11,9 @@ require_once __DIR__ . '/site_config.php';
         <p>SEBI-registered Portfolio Management Service focused on small-cap investing.</p>
         <p class="footer-sebi">SEBI Registration: INP000006554</p>
       </div>
-      <div class="footer-col">
+      <div class="footer-col footer-col-links">
         <h4>Quick links</h4>
-        <ul>
+        <ul class="footer-links-grid">
           <li><a href="<?= pms_h(pms_url('index.php')) ?>">Home</a></li>
           <li><a href="<?= pms_h(pms_url('about.php')) ?>">About Us</a></li>
           <li><a href="<?= pms_h(pms_url('who-should-invest.php')) ?>">Who Should Invest</a></li>
@@ -22,7 +22,6 @@ require_once __DIR__ . '/site_config.php';
           <li><a href="<?= pms_h(pms_url('team/')) ?>">Team</a></li>
           <li><a href="<?= pms_h(pms_url('faq/')) ?>">FAQs</a></li>
           <li><a href="<?= pms_h(pms_url('contact-us/')) ?>">Contact</a></li>
-          <li><a href="<?= pms_h(pms_url('client_login.php')) ?>">Client Login</a></li>
         </ul>
       </div>
       <div class="footer-col">
