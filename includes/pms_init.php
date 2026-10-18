@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * PMS client portal helpers.
  * Reuses existing database.php ($mysqli) and PHP sessions.
@@ -162,6 +162,19 @@ function pms_ensure_schema($mysqli)
             UNIQUE KEY unique_pms_folio_access (client_id, folio_id),
             KEY idx_pms_access_client (client_id),
             KEY idx_pms_access_folio (folio_id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+
+        "CREATE TABLE IF NOT EXISTS pms_users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(150) DEFAULT NULL,
+            phone VARCHAR(30) DEFAULT NULL,
+            email VARCHAR(150) DEFAULT NULL,
+            dob DATE DEFAULT NULL,
+            pan_number VARCHAR(20) DEFAULT NULL,
+            pms_number VARCHAR(50) DEFAULT NULL,
+            city VARCHAR(80) DEFAULT NULL,
+            message TEXT DEFAULT NULL,
+            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
     );
 
@@ -240,7 +253,7 @@ function pms_inr($amount)
         $rest = preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', $rest);
         $int = $rest . ',' . $last3;
     }
-    return ($negative ? '-' : '') . '₹' . $int . '.' . $dec;
+    return ($negative ? '-' : '') . 'â‚¹' . $int . '.' . $dec;
 }
 
 function pms_inr_short($amount)
@@ -249,10 +262,10 @@ function pms_inr_short($amount)
     $sign = $amount < 0 ? '-' : '';
     $amount = abs($amount);
     if ($amount >= 10000000) {
-        return $sign . '₹' . number_format($amount / 10000000, 2) . ' Cr';
+        return $sign . 'â‚¹' . number_format($amount / 10000000, 2) . ' Cr';
     }
     if ($amount >= 100000) {
-        return $sign . '₹' . number_format($amount / 100000, 2) . ' L';
+        return $sign . 'â‚¹' . number_format($amount / 100000, 2) . ' L';
     }
     return pms_inr($sign === '-' ? -$amount : $amount);
 }
@@ -271,10 +284,10 @@ function pms_is_local()
 function pms_date($date)
 {
     if (!$date || $date === '0000-00-00') {
-        return '—';
+        return 'â€”';
     }
     $ts = strtotime($date);
-    return $ts ? date('d M Y', $ts) : '—';
+    return $ts ? date('d M Y', $ts) : 'â€”';
 }
 
 function pms_month_label($ym)
@@ -322,7 +335,7 @@ function pms_set_client_session($client, $folio = null)
 function pms_default_folio($folios)
 {
     foreach ((array) $folios as $folio) {
-        if (!empty($folio['folio_number']) && $folio['folio_number'] === '50192834/88') {
+        if (!empty($folio['folio_number']) && $folio['folio_number'] === '400987654321') {
             return $folio;
         }
     }
@@ -666,11 +679,11 @@ function pms_folio_viewer_emails($mysqli, $folio_id)
 function pms_master_account_defs()
 {
     return array(
-        array('Aparna Hoshing', 'aparna.hoshing@example.com', '9876543211', '10482910/42', 'Aparna Hoshing', 'Individual', '2025-06-01', 'Stable & Healthy'),
-        array('Sudhir Hoshing HUF (A1)', 'sudhir.hufa1@makeindiapms.local', '9876543212', '39182049/11', 'Sudhir Hoshing HUF (A1)', 'HUF', '2025-01-10', 'Strong Compounding'),
-        array('Sudhir Rao Hoshing', 'sudhirhoshing@gmail.com', '8828040322', '50192834/88', 'Sudhir Hoshing (A2)', 'Individual', '2025-03-18', 'Excellent Growth'),
-        array('Sudhir Hoshing (A3)', 'sudhir.a3@makeindiapms.local', '9876543213', '77281903/05', 'Sudhir Hoshing (A3)', 'Individual', '2025-04-02', 'Strong Alpha'),
-        array('Sudhir Hoshing HUF (A4)', 'sudhir.hufa4@makeindiapms.local', '9876543214', '88391024/90', 'Sudhir Hoshing HUF (A4)', 'HUF', '2025-02-14', 'High Risk / Rebalancing'),
+        array('Aparna Hoshing', 'aparna.hoshing@example.com', '9876543211', '201567891234', 'Aparna Hoshing', 'Individual', '2025-06-01', 'Stable & Healthy'),
+        array('Sudhir Hoshing HUF (A1)', 'sudhir.hufa1@makeindiapms.local', '9876543212', '400123456789', 'Sudhir Hoshing HUF (A1)', 'HUF', '2025-01-10', 'Strong Compounding'),
+        array('Sudhir Rao Hoshing', 'sudhirhoshing@gmail.com', '8828040322', '400987654321', 'Sudhir Hoshing (A2)', 'Individual', '2025-03-18', 'Excellent Growth'),
+        array('Sudhir Hoshing (A3)', 'sudhir.a3@makeindiapms.local', '9876543213', '120456789012', 'Sudhir Hoshing (A3)', 'Individual', '2025-04-02', 'Strong Alpha'),
+        array('Sudhir Hoshing HUF (A4)', 'sudhir.hufa4@makeindiapms.local', '9876543214', '300456123789', 'Sudhir Hoshing HUF (A4)', 'HUF', '2025-02-14', 'High Risk / Rebalancing'),
     );
 }
 
@@ -763,7 +776,7 @@ function pms_folio_rows($mysqli)
     $sql = "SELECT f.*, c.name AS client_name, c.email AS client_email
             FROM pms_folios f
             INNER JOIN pms_clients c ON c.id = f.client_id
-            ORDER BY FIELD(f.folio_number, '10482910/42', '39182049/11', '50192834/88', '77281903/05', '88391024/90'), f.id ASC";
+            ORDER BY FIELD(f.folio_number, '201567891234', '400123456789', '400987654321', '120456789012', '300456123789'), f.id ASC";
     $result = $mysqli->query($sql);
     if ($result) {
         while ($row = $result->fetch_assoc()) {
@@ -885,11 +898,11 @@ function pms_seed_demo_if_empty($mysqli)
     $aparnaId = $clientIds['aparna.hoshing@example.com'];
 
     $folios = array(
-        array($sudhirId, '39182049/11', 'Sudhir Hoshing HUF A1', 'HUF', '2025-01-10'),
-        array($sudhirId, '50192834/88', 'Sudhir Hoshing A2', 'Individual', '2025-03-18'),
-        array($sudhirId, '77281903/05', 'Sudhir Hoshing A3', 'Individual', '2025-04-02'),
-        array($sudhirId, '88391024/90', 'Sudhir Hoshing HUF A4', 'HUF', '2025-02-14'),
-        array($aparnaId, '10482910/42', 'Aparna Hoshing', 'Individual', '2025-06-01'),
+        array($sudhirId, '400123456789', 'Sudhir Hoshing HUF A1', 'HUF', '2025-01-10'),
+        array($sudhirId, '400987654321', 'Sudhir Hoshing A2', 'Individual', '2025-03-18'),
+        array($sudhirId, '120456789012', 'Sudhir Hoshing A3', 'Individual', '2025-04-02'),
+        array($sudhirId, '300456123789', 'Sudhir Hoshing HUF A4', 'HUF', '2025-02-14'),
+        array($aparnaId, '201567891234', 'Aparna Hoshing', 'Individual', '2025-06-01'),
     );
 
     $folioIds = array();
@@ -904,16 +917,16 @@ function pms_seed_demo_if_empty($mysqli)
 
     $txStmt = $mysqli->prepare('INSERT INTO pms_transactions (client_id, folio_id, transaction_type, amount, transaction_date, remarks, status, created_by) VALUES (?, ?, ?, ?, ?, ?, "Completed", "system")');
     $transactions = array(
-        array($sudhirId, $folioIds['50192834/88'], 'Investment', 57300000.00, '2025-03-18', 'Initial Capital Deployment (Make in India PMS)'),
-        array($sudhirId, $folioIds['50192834/88'], 'Withdrawal', 4500000.00, '2026-01-15', 'Requested Liquidity Payout'),
-        array($sudhirId, $folioIds['50192834/88'], 'Monthly Payout', 1260000.00, '2026-08-31', 'Automated 2% Monthly Payout'),
-        array($sudhirId, $folioIds['39182049/11'], 'Investment', 10300000.00, '2025-01-10', 'Initial Capital Deployment'),
-        array($sudhirId, $folioIds['77281903/05'], 'Investment', 40000000.00, '2025-04-02', 'Initial Capital Deployment'),
-        array($sudhirId, $folioIds['77281903/05'], 'Withdrawal', 3200000.00, '2026-03-12', 'Requested Liquidity Payout'),
-        array($sudhirId, $folioIds['88391024/90'], 'Investment', 25000000.00, '2025-02-14', 'Initial Capital Deployment'),
-        array($sudhirId, $folioIds['88391024/90'], 'Monthly Payout', 3360000.00, '2026-08-31', 'Cumulative monthly payouts'),
-        array($aparnaId, $folioIds['10482910/42'], 'Investment', 10000000.00, '2025-06-01', 'Initial Capital Deployment'),
-        array($aparnaId, $folioIds['10482910/42'], 'Monthly Payout', 300000.00, '2026-08-31', 'Monthly payout as per configured rule'),
+        array($sudhirId, $folioIds['400987654321'], 'Investment', 57300000.00, '2025-03-18', 'Initial Capital Deployment (Make in India PMS)'),
+        array($sudhirId, $folioIds['400987654321'], 'Withdrawal', 4500000.00, '2026-01-15', 'Requested Liquidity Payout'),
+        array($sudhirId, $folioIds['400987654321'], 'Monthly Payout', 1260000.00, '2026-08-31', 'Automated 2% Monthly Payout'),
+        array($sudhirId, $folioIds['400123456789'], 'Investment', 10300000.00, '2025-01-10', 'Initial Capital Deployment'),
+        array($sudhirId, $folioIds['120456789012'], 'Investment', 40000000.00, '2025-04-02', 'Initial Capital Deployment'),
+        array($sudhirId, $folioIds['120456789012'], 'Withdrawal', 3200000.00, '2026-03-12', 'Requested Liquidity Payout'),
+        array($sudhirId, $folioIds['300456123789'], 'Investment', 25000000.00, '2025-02-14', 'Initial Capital Deployment'),
+        array($sudhirId, $folioIds['300456123789'], 'Monthly Payout', 3360000.00, '2026-08-31', 'Cumulative monthly payouts'),
+        array($aparnaId, $folioIds['201567891234'], 'Investment', 10000000.00, '2025-06-01', 'Initial Capital Deployment'),
+        array($aparnaId, $folioIds['201567891234'], 'Monthly Payout', 300000.00, '2026-08-31', 'Monthly payout as per configured rule'),
     );
     foreach ($transactions as $txn) {
         $txStmt->bind_param('iisdss', $txn[0], $txn[1], $txn[2], $txn[3], $txn[4], $txn[5]);
@@ -923,13 +936,13 @@ function pms_seed_demo_if_empty($mysqli)
 
     $holdStmt = $mysqli->prepare('INSERT INTO pms_holdings (client_id, folio_id, asset_name, quantity, average_cost, current_price, current_value, valuation_date, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)');
     $holdings = array(
-        array($sudhirId, $folioIds['50192834/88'], 'Large Cap Equity Portfolio', 10000.0000, 4500.00, 4500.00, 45000000.00, '2026-09-20'),
-        array($sudhirId, $folioIds['50192834/88'], 'Mid Cap Equity Portfolio', 5000.0000, 4000.00, 4000.00, 20000000.00, '2026-09-20'),
-        array($sudhirId, $folioIds['50192834/88'], 'Debt / Liquid Allocation', 6365.2130, 1000.00, 1000.00, 6365213.00, '2026-09-20'),
-        array($sudhirId, $folioIds['39182049/11'], 'Managed Equity Portfolio', 1074.2890, 10000.00, 10000.00, 10742890.00, '2026-09-20'),
-        array($sudhirId, $folioIds['77281903/05'], 'Managed Equity Portfolio', 4387.1205, 10000.00, 10000.00, 43871205.00, '2026-09-20'),
-        array($sudhirId, $folioIds['88391024/90'], 'Managed Equity Portfolio', 2228.9814, 10000.00, 10000.00, 22289814.00, '2026-09-20'),
-        array($aparnaId, $folioIds['10482910/42'], 'Managed Equity Portfolio', 1029.8201, 10000.00, 10000.00, 10298201.00, '2026-09-20'),
+        array($sudhirId, $folioIds['400987654321'], 'Large Cap Equity Portfolio', 10000.0000, 4500.00, 4500.00, 45000000.00, '2026-09-20'),
+        array($sudhirId, $folioIds['400987654321'], 'Mid Cap Equity Portfolio', 5000.0000, 4000.00, 4000.00, 20000000.00, '2026-09-20'),
+        array($sudhirId, $folioIds['400987654321'], 'Debt / Liquid Allocation', 6365.2130, 1000.00, 1000.00, 6365213.00, '2026-09-20'),
+        array($sudhirId, $folioIds['400123456789'], 'Managed Equity Portfolio', 1074.2890, 10000.00, 10000.00, 10742890.00, '2026-09-20'),
+        array($sudhirId, $folioIds['120456789012'], 'Managed Equity Portfolio', 4387.1205, 10000.00, 10000.00, 43871205.00, '2026-09-20'),
+        array($sudhirId, $folioIds['300456123789'], 'Managed Equity Portfolio', 2228.9814, 10000.00, 10000.00, 22289814.00, '2026-09-20'),
+        array($aparnaId, $folioIds['201567891234'], 'Managed Equity Portfolio', 1029.8201, 10000.00, 10000.00, 10298201.00, '2026-09-20'),
     );
     foreach ($holdings as $holding) {
         $holdStmt->bind_param('iisdddds', $holding[0], $holding[1], $holding[2], $holding[3], $holding[4], $holding[5], $holding[6], $holding[7]);
@@ -939,9 +952,9 @@ function pms_seed_demo_if_empty($mysqli)
 
     $payStmt = $mysqli->prepare('INSERT INTO pms_payouts (client_id, folio_id, payout_month, payout_amount, status, payment_date, remarks) VALUES (?, ?, ?, ?, "Paid", ?, ?)');
     $payouts = array(
-        array($sudhirId, $folioIds['50192834/88'], '2026-08', 1260000.00, '2026-08-31', 'Automated 2% Monthly Payout'),
-        array($sudhirId, $folioIds['88391024/90'], '2026-08', 3360000.00, '2026-08-31', 'Monthly payout as per configured rule'),
-        array($aparnaId, $folioIds['10482910/42'], '2026-08', 300000.00, '2026-08-31', 'Monthly payout as per configured rule'),
+        array($sudhirId, $folioIds['400987654321'], '2026-08', 1260000.00, '2026-08-31', 'Automated 2% Monthly Payout'),
+        array($sudhirId, $folioIds['300456123789'], '2026-08', 3360000.00, '2026-08-31', 'Monthly payout as per configured rule'),
+        array($aparnaId, $folioIds['201567891234'], '2026-08', 300000.00, '2026-08-31', 'Monthly payout as per configured rule'),
     );
     foreach ($payouts as $payout) {
         $payStmt->bind_param('iisdss', $payout[0], $payout[1], $payout[2], $payout[3], $payout[4], $payout[5]);
@@ -950,7 +963,7 @@ function pms_seed_demo_if_empty($mysqli)
     $payStmt->close();
 
     $mysqli->query("INSERT INTO pms_payout_rules (folio_id, payout_percent, payout_label, is_active) VALUES (NULL, 2.0000, 'Monthly Payout', 1)");
-    $a2 = (int) $folioIds['50192834/88'];
+    $a2 = (int) $folioIds['400987654321'];
     $mysqli->query("INSERT INTO pms_payout_rules (folio_id, payout_percent, payout_label, is_active) VALUES ({$a2}, 2.0000, 'Monthly Payout', 1)");
 
     pms_audit($mysqli, 'system', 'Seeded demo portfolio data', 'system', 0, '', 'Initial PMS portal tables populated');
@@ -1045,7 +1058,7 @@ function pms_ensure_folio_investment_package($mysqli, $client_id, $folio_id, $in
 
 /**
  * Import client intake from Data.txt (Junaid only from Shaikh family + remaining clients).
- * Idempotent — safe to run on every request bootstrap.
+ * Idempotent â€” safe to run on every request bootstrap.
  */
 function pms_import_intake_clients($mysqli)
 {
@@ -1071,7 +1084,7 @@ function pms_import_intake_clients($mysqli)
             'email' => 'shaikh.naved79@gmail.com',
             'mobile' => '9137483417',
             'folios' => array(
-                array('JUNA9137/35', 'Junaid Shaikh', 'Individual', '2026-04-01', 3500000.00, 70000.00),
+                array('500123987456', 'Junaid Shaikh', 'Individual', '2026-04-01', 3500000.00, 70000.00),
             ),
         ),
         array(
@@ -1079,7 +1092,7 @@ function pms_import_intake_clients($mysqli)
             'email' => 'hftarawala@hotmail.com',
             'mobile' => '9619500185',
             'folios' => array(
-                array('FATE9619/20', 'Fatema Tarawala', 'Individual', '2026-04-01', 2000000.00, 40000.00),
+                array('10567890/01', 'Fatema Tarawala', 'Individual', '2026-04-01', 2000000.00, 40000.00),
             ),
         ),
         array(
@@ -1087,9 +1100,9 @@ function pms_import_intake_clients($mysqli)
             'email' => 'vinigupta@gmail.com',
             'mobile' => '8104548180',
             'folios' => array(
-                array('VINI8104/01', 'Vinita Abhishek Gupta (F1)', 'Individual', '2026-04-01', 1250000.00, 25000.00),
-                array('VINI8104/02', 'Vinita Abhishek Gupta (F2)', 'Individual', '2026-04-01', 200000.00, 4000.00),
-                array('VINI8104/03', 'Vinita Abhishek Gupta (F3)', 'Individual', '2026-04-01', 1600000.00, 32000.00),
+                array('10567890/03', 'Vinita Abhishek Gupta (F1)', 'Individual', '2026-04-01', 1250000.00, 25000.00),
+                array('11223344/55', 'Vinita Abhishek Gupta (F2)', 'Individual', '2026-04-01', 200000.00, 4000.00),
+                array('11223344/66', 'Vinita Abhishek Gupta (F3)', 'Individual', '2026-04-01', 1600000.00, 32000.00),
             ),
         ),
         array(
@@ -1097,7 +1110,7 @@ function pms_import_intake_clients($mysqli)
             'email' => 'kjguard2010@gmail.com',
             'mobile' => '9821410759',
             'folios' => array(
-                array('KEKI9821/18', 'Keki Jal Guard', 'Individual', '2026-04-01', 1800000.00, 36000.00),
+                array('400556677889', 'Keki Jal Guard', 'Individual', '2026-04-01', 1800000.00, 36000.00),
             ),
         ),
         array(
@@ -1105,7 +1118,7 @@ function pms_import_intake_clients($mysqli)
             'email' => 'drgphoto@gmail.com',
             'mobile' => '9820427170',
             'folios' => array(
-                array('GAUT9820/20', 'Gautam G Mallapur', 'Individual', '2026-04-01', 2000000.00, 40000.00),
+                array('400112233445', 'Gautam G Mallapur', 'Individual', '2026-04-01', 2000000.00, 40000.00),
             ),
         ),
     );

@@ -18,7 +18,7 @@ function isMobileNav() {
   return window.matchMedia("(max-width: 992px)").matches;
 }
 
-function setMobileNav(open) {
+function setNavOpen(open) {
   if (!nav) {
     return;
   }
@@ -41,12 +41,12 @@ function setMobileNav(open) {
   }
 }
 
-function closeMobileNav() {
-  setMobileNav(false);
+function closeNav() {
+  setNavOpen(false);
 }
 
 if (toggleBtn && nav) {
-  setMobileNav(false);
+  setNavOpen(false);
 
   toggleBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -54,25 +54,25 @@ if (toggleBtn && nav) {
     if (!isMobileNav()) {
       return;
     }
-    setMobileNav(!nav.classList.contains("active"));
+    setNavOpen(!nav.classList.contains("active"));
   });
 
   if (closeBtn) {
     closeBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      closeMobileNav();
+      closeNav();
     });
   }
 
   if (overlay) {
     overlay.addEventListener("click", () => {
-      closeMobileNav();
+      closeNav();
     });
   }
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
-      closeMobileNav();
+      closeNav();
     }
   });
 
@@ -85,7 +85,7 @@ if (toggleBtn && nav) {
       if (parent && parent.classList.contains("has-submenu") && parent.querySelector(".submenu")) {
         return;
       }
-      closeMobileNav();
+      closeNav();
     });
   });
 
@@ -104,7 +104,7 @@ if (toggleBtn && nav) {
 
   window.addEventListener("resize", () => {
     if (!isMobileNav()) {
-      closeMobileNav();
+      closeNav();
     }
   });
 }
@@ -127,7 +127,7 @@ if (toggleBtn && nav) {
 
   let current = 0;
   let timer = null;
-  const delay = 4500;
+  const delay = 2800;
   const dots = [];
 
   if (dotsWrap) {
@@ -214,7 +214,7 @@ if (toggleBtn && nav) {
   restart();
 })();
 
-const authBar = document.getElementById("authBar") || document.querySelector(".header-right");
+const authBar = document.getElementById("authBar");
 if (authBar) {
   fetch("/client_session_bar.php", { credentials: "same-origin" })
     .then((r) => (r.ok ? r.text() : ""))
@@ -222,11 +222,7 @@ if (authBar) {
       if (!html) {
         return;
       }
-      const burger = document.getElementById("menuToggle");
       authBar.innerHTML = html;
-      if (burger) {
-        authBar.appendChild(burger);
-      }
       const loggedIn = html.indexOf("client_logout.php") !== -1;
       const navUl = document.querySelector("#navbar > ul");
       if (navUl) {
@@ -248,3 +244,75 @@ if (authBar) {
     })
     .catch(() => {});
 }
+
+/* Fixed back-to-top button */
+(function initBackToTop() {
+  const btn = document.getElementById("backToTop");
+  if (!btn) {
+    return;
+  }
+  function update() {
+    btn.classList.toggle("is-visible", window.scrollY > 280);
+  }
+  update();
+  window.addEventListener("scroll", update, { passive: true });
+})();
+
+/* Enquiry form basic field validation (footer + contact) */
+(function initEnquiryForms() {
+  const forms = document.querySelectorAll(".pms-enquiry-form");
+  if (!forms.length) {
+    return;
+  }
+
+  function digits(value) {
+    return String(value || "").replace(/\D+/g, "");
+  }
+
+  function showError(form, message) {
+    const box = form.querySelector(".enquiry-field-error");
+    if (!box) {
+      return;
+    }
+    box.hidden = !message;
+    box.textContent = message || "";
+  }
+
+  forms.forEach((form) => {
+    form.addEventListener("submit", (e) => {
+      const name = form.querySelector('[name="name"]');
+      const phone = form.querySelector('[name="phone"]');
+      const email = form.querySelector('[name="email"]');
+      const message = form.querySelector('[name="message"]');
+      const fields = [name, phone, email, message].filter(Boolean);
+
+      fields.forEach((el) => el.classList.remove("is-invalid"));
+      showError(form, "");
+
+      const nameVal = name ? name.value.trim() : "";
+      const phoneVal = phone ? digits(phone.value) : "";
+      const emailVal = email ? email.value.trim() : "";
+      const messageVal = message ? message.value.trim() : "";
+      let err = "";
+
+      if (nameVal.length < 2) {
+        err = "Please enter your full name.";
+        if (name) name.classList.add("is-invalid");
+      } else if (phoneVal.length < 10 || phoneVal.length > 15) {
+        err = "Please enter a valid phone number (10–15 digits).";
+        if (phone) phone.classList.add("is-invalid");
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+        err = "Please enter a valid email address.";
+        if (email) email.classList.add("is-invalid");
+      } else if (messageVal.length < 10) {
+        err = "Please enter a message of at least 10 characters.";
+        if (message) message.classList.add("is-invalid");
+      }
+
+      if (err) {
+        e.preventDefault();
+        showError(form, err);
+      }
+    });
+  });
+})();

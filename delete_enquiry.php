@@ -1,22 +1,16 @@
 <?php
-
-
-include 'database.php';
+require_once __DIR__ . '/includes/pms_init.php';
+pms_require_admin();
 
 if (isset($_GET['id'])) {
-    $userId = intval($_GET['id']);
-
-    $deleteQuery = "DELETE FROM pms_users WHERE id = ?";
-    $stmt = $mysqli->prepare($deleteQuery);
-    $stmt->bind_param("i", $userId);
-
-    if ($stmt->execute()) {
-        $_SESSION['message'] = "User deleted successfully.";
-    } else {
-        $_SESSION['error'] = "Failed to delete user.";
+    $userId = (int) $_GET['id'];
+    if ($userId > 0) {
+        $stmt = $mysqli->prepare('DELETE FROM pms_users WHERE id = ?');
+        $stmt->bind_param('i', $userId);
+        $stmt->execute();
+        $stmt->close();
     }
-
-    $stmt->close();
 }
-header("Location: dashboard.php");
+
+header('Location: admin_enquiries.php?ok=1');
 exit();

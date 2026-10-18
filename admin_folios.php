@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/includes/pms_init.php';
 pms_require_admin();
 
@@ -96,7 +96,7 @@ require __DIR__ . '/includes/pms_admin_header.php';
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Folio Number</label>
-                        <input class="form-control" name="folio_number" required placeholder="50192834/88" value="<?= $edit ? pms_h($edit['folio_number']) : '' ?>">
+                        <input class="form-control" name="folio_number" required placeholder="400987654321" value="<?= $edit ? pms_h($edit['folio_number']) : '' ?>">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Account Name</label>

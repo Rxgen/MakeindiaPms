@@ -6,6 +6,7 @@ $pmsAdminPage = basename(isset($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : ''
 $pmsAdminUser = isset($_SESSION['username']) ? $_SESSION['username'] : 'admin';
 $pmsNav = array(
     'dashboard.php' => 'Dashboard',
+    'admin_enquiries.php' => 'Enquiries',
     'admin_master.php' => 'Master Register',
     'admin_clients.php' => 'Clients',
     'admin_folios.php' => 'Folios',

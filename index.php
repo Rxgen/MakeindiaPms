@@ -8,20 +8,20 @@ require __DIR__ . '/includes/site_head.php';
     <div class="slides">
       <div class="slide active">
         <picture>
-          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/hero-mobile-1.jpg')) ?>">
-          <img src="<?= pms_h(pms_url('img/hero-desktop-1.jpg')) ?>" alt="Make in India Capital PMS" loading="eager">
+          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/201-mobile.png')) ?>">
+          <img src="<?= pms_h(pms_url('img/201-desktop.png')) ?>" alt="Make in India Capital PMS" loading="eager">
         </picture>
       </div>
       <div class="slide">
         <picture>
-          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/hero-mobile-2.jpg')) ?>">
-          <img src="<?= pms_h(pms_url('img/hero-desktop-2.jpg')) ?>" alt="Portfolio management" loading="lazy">
+          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/202-Mobile.png')) ?>">
+          <img src="<?= pms_h(pms_url('img/202-desktop.png')) ?>" alt="Portfolio management" loading="lazy">
         </picture>
       </div>
       <div class="slide">
         <picture>
-          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/hero-mobile-3.jpg')) ?>">
-          <img src="<?= pms_h(pms_url('img/hero-desktop-3.jpg')) ?>" alt="Long-term investing" loading="lazy">
+          <source media="(max-width: 767px)" srcset="<?= pms_h(pms_url('img/303-mobile.png')) ?>">
+          <img src="<?= pms_h(pms_url('img/303-desktop.png')) ?>" alt="Long-term investing" loading="lazy">
         </picture>
       </div>
     </div>
@@ -40,7 +40,7 @@ require __DIR__ . '/includes/site_head.php';
     <div class="slider-dots" id="sliderDots" aria-hidden="true"></div>
   </div>
 
-  <section class="stats-section" style="--stats-bg: url('<?= pms_h(pms_url('img/hero-desktop-3.jpg')) ?>')">
+  <section class="stats-section" style="--stats-bg: url('<?= pms_h(pms_url('img/202-desktop.png')) ?>')">
     <div class="stats-section-inner">
       <div class="stats-band-head">
         <p class="section-kicker light">At a glance</p>
