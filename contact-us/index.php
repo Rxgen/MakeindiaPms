@@ -38,21 +38,16 @@ require dirname(__DIR__) . '/includes/site_head.php';
 
     <div class="contact-form-card" id="enquiry">
       <h2>Send an enquiry</h2>
-      <?php
-      $enquiryStatus = isset($_GET['enquiry']) ? (string) $_GET['enquiry'] : '';
-      if ($enquiryStatus === '1' || $enquiryStatus === 'ok'): ?>
-        <p class="enquiry-status ok" role="status">Thanks for your mail. Our team will contact you shortly.</p>
-      <?php elseif ($enquiryStatus === 'error'): ?>
-        <p class="enquiry-status err" role="alert">Please check name, phone, email and message, then try again.</p>
-      <?php endif; ?>
       <form class="pms-enquiry-form" action="<?= pms_h(pms_url('submit.php')) ?>" method="POST" novalidate>
         <input type="hidden" name="return_to" value="<?= pms_h(pms_url('contact-us/')) ?>">
+        <input type="hidden" name="ajax" value="1">
         <input type="text" name="name" placeholder="Name" required minlength="2" autocomplete="name">
         <input type="tel" name="phone" placeholder="Phone" required pattern="[0-9+\-\s()]{10,18}" autocomplete="tel">
         <input type="email" name="email" placeholder="Email" required autocomplete="email">
         <textarea name="message" placeholder="Message (min. 10 characters)" required minlength="10"></textarea>
         <p class="enquiry-field-error" hidden></p>
         <button type="submit">Send enquiry</button>
+        <p class="enquiry-status enquiry-form-status" hidden role="status"></p>
       </form>
     </div>
   </div>

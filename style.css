@@ -1961,11 +1961,15 @@ body.nav-open {
 
 .enquiry-status {
   min-height: 0;
-  margin-bottom: 12px;
+  margin: 12px 0 0;
   font-size: 14px;
   line-height: 1.5;
   padding: 10px 12px;
   border-radius: 10px;
+}
+
+.enquiry-form-status[hidden] {
+  display: none !important;
 }
 
 .enquiry-status.ok {

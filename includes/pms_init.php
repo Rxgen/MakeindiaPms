@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * PMS client portal helpers.
  * Reuses existing database.php ($mysqli) and PHP sessions.
@@ -253,7 +253,9 @@ function pms_inr($amount)
         $rest = preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', $rest);
         $int = $rest . ',' . $last3;
     }
-    return ($negative ? '-' : '') . 'â‚¹' . $int . '.' . $dec;
+    // U+20B9 Indian Rupee Sign (avoid mojibake from mis-encoded source)
+    $rupee = "\xE2\x82\xB9";
+    return ($negative ? '-' : '') . $rupee . $int . '.' . $dec;
 }
 
 function pms_inr_short($amount)
@@ -261,18 +263,21 @@ function pms_inr_short($amount)
     $amount = (float) $amount;
     $sign = $amount < 0 ? '-' : '';
     $amount = abs($amount);
+    $rupee = "\xE2\x82\xB9";
     if ($amount >= 10000000) {
-        return $sign . 'â‚¹' . number_format($amount / 10000000, 2) . ' Cr';
+        return $sign . $rupee . number_format($amount / 10000000, 2) . ' Cr';
     }
     if ($amount >= 100000) {
-        return $sign . 'â‚¹' . number_format($amount / 100000, 2) . ' L';
+        return $sign . $rupee . number_format($amount / 100000, 2) . ' L';
     }
     return pms_inr($sign === '-' ? -$amount : $amount);
 }
 
-function pms_h($value)
-{
-    return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+if (!function_exists('pms_h')) {
+    function pms_h($value)
+    {
+        return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+    }
 }
 
 function pms_is_local()
@@ -284,10 +289,10 @@ function pms_is_local()
 function pms_date($date)
 {
     if (!$date || $date === '0000-00-00') {
-        return 'â€”';
+        return "\xE2\x80\x94"; // em dash
     }
     $ts = strtotime($date);
-    return $ts ? date('d M Y', $ts) : 'â€”';
+    return $ts ? date('d M Y', $ts) : "\xE2\x80\x94";
 }
 
 function pms_month_label($ym)

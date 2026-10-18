@@ -258,7 +258,7 @@ if (authBar) {
   window.addEventListener("scroll", update, { passive: true });
 })();
 
-/* Enquiry form basic field validation (footer + contact) */
+/* Enquiry form: validate + AJAX submit (no page reload) */
 (function initEnquiryForms() {
   const forms = document.querySelectorAll(".pms-enquiry-form");
   if (!forms.length) {
@@ -269,7 +269,7 @@ if (authBar) {
     return String(value || "").replace(/\D+/g, "");
   }
 
-  function showError(form, message) {
+  function showFieldError(form, message) {
     const box = form.querySelector(".enquiry-field-error");
     if (!box) {
       return;
@@ -278,16 +278,32 @@ if (authBar) {
     box.textContent = message || "";
   }
 
+  function showStatus(form, message, ok) {
+    const box = form.querySelector(".enquiry-form-status");
+    if (!box) {
+      return;
+    }
+    box.hidden = !message;
+    box.textContent = message || "";
+    box.classList.toggle("ok", !!ok);
+    box.classList.toggle("err", !ok && !!message);
+    box.setAttribute("role", ok ? "status" : "alert");
+  }
+
   forms.forEach((form) => {
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
       const name = form.querySelector('[name="name"]');
       const phone = form.querySelector('[name="phone"]');
       const email = form.querySelector('[name="email"]');
       const message = form.querySelector('[name="message"]');
+      const button = form.querySelector('button[type="submit"]');
       const fields = [name, phone, email, message].filter(Boolean);
 
       fields.forEach((el) => el.classList.remove("is-invalid"));
-      showError(form, "");
+      showFieldError(form, "");
+      showStatus(form, "", false);
 
       const nameVal = name ? name.value.trim() : "";
       const phoneVal = phone ? digits(phone.value) : "";
@@ -310,8 +326,77 @@ if (authBar) {
       }
 
       if (err) {
-        e.preventDefault();
-        showError(form, err);
+        showFieldError(form, err);
+        return;
+      }
+
+      if (button) {
+        button.disabled = true;
+        button.dataset.originalText = button.textContent;
+        button.textContent = "Sending…";
+      }
+
+      try {
+        const body = new FormData(form);
+        body.set("ajax", "1");
+        const res = await fetch(form.action, {
+          method: "POST",
+          body,
+          headers: {
+            Accept: "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+          },
+          credentials: "same-origin",
+          redirect: "follow",
+        });
+
+        // Live may return text/html + BOM before JSON; parse body text safely.
+        const rawText = (await res.text()).replace(/^\uFEFF/, "").trim();
+        let data = null;
+        if (rawText.charAt(0) === "{") {
+          try {
+            data = JSON.parse(rawText);
+          } catch (parseErr) {
+            data = null;
+          }
+        }
+
+        if (!data) {
+          const finalUrl = String(res.url || "");
+          if (/[?&]enquiry=1\b/.test(finalUrl) || /"ok"\s*:\s*true/.test(rawText)) {
+            data = {
+              ok: true,
+              message: "Thanks for your mail. Our team will contact you shortly.",
+            };
+          } else if (/[?&]enquiry=error\b/.test(finalUrl)) {
+            data = {
+              ok: false,
+              message: "Please check name, phone, email and message, then try again.",
+            };
+          }
+        }
+
+        if (data && data.ok) {
+          form.reset();
+          showStatus(
+            form,
+            data.message || "Thanks for your mail. Our team will contact you shortly.",
+            true
+          );
+        } else {
+          showStatus(
+            form,
+            (data && data.message) || "Something went wrong. Please try again.",
+            false
+          );
+        }
+      } catch (networkErr) {
+        showStatus(form, "Could not send. Please check your connection and try again.", false);
+      } finally {
+        if (button) {
+          button.disabled = false;
+          button.textContent = button.dataset.originalText || "Send enquiry";
+        }
       }
     });
   });
