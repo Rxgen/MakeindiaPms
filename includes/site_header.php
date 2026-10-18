@@ -16,7 +16,7 @@ if (!isset($pms_header_folio)) {
           </a>
         </div>
         <div class="header-sebi" title="SEBI Registration">
-          <span class="header-sebi-label">SEBI Registered PMS</span>
+          <span class="header-sebi-label">SEBI Registered No.</span>
           <span class="header-sebi-code">INP000006554</span>
         </div>
       </div>
@@ -61,8 +61,8 @@ if (!isset($pms_header_folio)) {
             <?php endif; ?>
             <a class="btn-auth btn-auth-outline" href="<?= pms_h(pms_url('client_logout.php')) ?>"><i class="fas fa-sign-out-alt"></i> <span class="btn-label">Logout</span></a>
           <?php else: ?>
-            <a class="btn-auth btn-auth-client" href="<?= pms_h(pms_url('client_login.php')) ?>"><i class="fas fa-sign-in-alt"></i> <span class="btn-label">Client Login</span></a>
-            <a class="btn-auth btn-auth-admin" href="<?= pms_h(pms_url('login.php')) ?>"><i class="fas fa-user-shield"></i> <span class="btn-label">Admin Login</span></a>
+            <a class="btn-auth btn-auth-client" href="<?= pms_h(pms_url('client_login.php')) ?>"><i class="fas fa-sign-in-alt"></i> <span class="btn-label"><span class="btn-label-full">Client Login</span><span class="btn-label-short">Client</span></span></a>
+            <a class="btn-auth btn-auth-admin" href="<?= pms_h(pms_url('login.php')) ?>"><i class="fas fa-user-shield"></i> <span class="btn-label"><span class="btn-label-full">Admin Login</span><span class="btn-label-short">Admin</span></span></a>
           <?php endif; ?>
         </div>
         <button type="button" class="menu-pill" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="navbar">

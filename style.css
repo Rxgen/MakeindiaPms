@@ -136,6 +136,10 @@ body {
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.btn-label-short {
+  display: none;
+}
+
 .btn-auth-client {
   background: var(--accent);
   color: #fff;
@@ -622,13 +626,13 @@ body.nav-open {
   .container.header-inner {
     padding-left: 6px;
     padding-right: 6px;
-    gap: 6px;
+    gap: 5px;
   }
 
   .header-left {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     flex: 0 1 auto;
     min-width: 0;
     max-width: none;
@@ -644,18 +648,27 @@ body.nav-open {
     gap: 4px;
   }
 
-  /* Keep SEBI visible — compact code only */
+  /* SEBI: label on top, number below */
   .header-sebi {
     display: flex !important;
     flex-direction: column;
-    padding-left: 6px;
+    justify-content: center;
+    gap: 1px;
+    padding-left: 5px;
     border-left: 1px solid var(--line);
     min-width: 0;
     overflow: visible;
   }
 
   .header-sebi-label {
-    display: none;
+    display: block !important;
+    font-size: 7px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    line-height: 1.1;
   }
 
   .header-sebi-code {
@@ -664,38 +677,71 @@ body.nav-open {
     font-weight: 700;
     letter-spacing: 0;
     white-space: nowrap;
-    line-height: 1.1;
+    line-height: 1.15;
   }
 
   .logo img {
-    height: 32px;
-    max-width: 46px;
+    height: 30px;
+    max-width: 44px;
   }
 
+  /* Client login as visible red pill */
   .btn-auth {
     display: inline-flex !important;
-    width: 28px;
-    height: 28px;
-    font-size: 10px;
-    padding: 0;
-    justify-content: center;
     flex-shrink: 0;
   }
 
-  .btn-auth i {
+  .btn-auth-client {
+    width: auto;
+    height: auto;
+    padding: 5px 8px;
+    gap: 4px;
+    font-size: 9px;
+    justify-content: center;
+  }
+
+  .btn-auth-client .btn-label {
+    display: inline !important;
+  }
+
+  .btn-auth-client .btn-label-full {
+    display: none;
+  }
+
+  .btn-auth-client .btn-label-short {
+    display: inline;
+  }
+
+  .btn-auth-client i {
     font-size: 10px;
   }
 
-  /* Keep full Menu pill (icon + label) like 425px */
+  /* Admin stays compact icon so Client + Menu fit */
+  .btn-auth-admin {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .btn-auth-admin .btn-label {
+    display: none !important;
+  }
+
+  .btn-auth-admin i {
+    font-size: 10px;
+  }
+
+  /* Menu pill */
   .menu-pill {
     display: inline-flex !important;
     width: auto;
     min-width: 0;
     height: auto;
-    padding: 6px 10px;
+    padding: 5px 9px;
     justify-content: center;
-    gap: 5px;
-    font-size: 10px;
+    gap: 4px;
+    font-size: 9px;
     letter-spacing: 0.03em;
     flex-shrink: 0;
   }
@@ -705,7 +751,7 @@ body.nav-open {
   }
 
   .menu-pill i {
-    font-size: 11px;
+    font-size: 10px;
   }
 }
 
@@ -737,23 +783,32 @@ body.nav-open {
     padding-left: 4px;
   }
 
+  .header-sebi-label {
+    font-size: 6px;
+  }
+
   .header-sebi-code {
     font-size: 8px;
   }
 
-  .btn-auth {
+  .btn-auth-client {
+    padding: 4px 7px;
+    font-size: 8px;
+  }
+
+  .btn-auth-admin {
     width: 26px;
     height: 26px;
   }
 
-  .btn-auth i {
+  .btn-auth-admin i {
     font-size: 9px;
   }
 
   .menu-pill {
-    padding: 5px 8px;
-    gap: 4px;
-    font-size: 9px;
+    padding: 4px 7px;
+    gap: 3px;
+    font-size: 8px;
   }
 
   .menu-pill span {
@@ -761,51 +816,67 @@ body.nav-open {
   }
 
   .menu-pill i {
-    font-size: 10px;
+    font-size: 9px;
   }
 }
 
-/* Fixed back-to-top (bottom right) */
+/* Fixed back-to-top (bottom right) — high contrast accent */
 .back-to-top {
   position: fixed;
-  right: 16px;
-  bottom: 20px;
-  z-index: 1200;
-  width: 44px;
-  height: 44px;
+  right: 18px;
+  bottom: 22px;
+  z-index: 1300;
+  width: 48px;
+  height: 48px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--ink);
+  background: var(--accent);
   color: #fff;
+  border: 2px solid #fff;
   text-decoration: none;
-  box-shadow: 0 10px 24px rgba(11, 21, 38, 0.28);
+  font-size: 18px;
+  line-height: 1;
+  box-shadow:
+    0 0 0 1px rgba(196, 18, 48, 0.35),
+    0 10px 28px rgba(196, 18, 48, 0.45),
+    0 4px 12px rgba(11, 21, 38, 0.25);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(8px);
-  transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease, background 0.2s ease;
+  transform: translateY(10px) scale(0.92);
+  transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .back-to-top.is-visible {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
-.back-to-top:hover {
-  background: var(--accent);
+.back-to-top:hover,
+.back-to-top:focus-visible {
+  background: var(--accent-deep);
+  color: #fff;
+  box-shadow:
+    0 0 0 2px rgba(196, 18, 48, 0.5),
+    0 14px 32px rgba(196, 18, 48, 0.55),
+    0 6px 14px rgba(11, 21, 38, 0.28);
+}
+
+.back-to-top i {
   color: #fff;
 }
 
 @media (max-width: 420px) {
   .back-to-top {
-    right: 12px;
-    bottom: 16px;
-    width: 40px;
-    height: 40px;
+    right: 14px;
+    bottom: 18px;
+    width: 46px;
+    height: 46px;
+    font-size: 17px;
   }
 }
 
