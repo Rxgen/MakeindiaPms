@@ -51,4 +51,5 @@ require_once __DIR__ . '/site_config.php';
   </footer>
   <a href="#top" class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">
     <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    <span class="back-to-top-text">TOP</span>
   </a>

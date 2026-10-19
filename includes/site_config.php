@@ -17,7 +17,7 @@ if (!defined('PMS_WEB_BASE')) {
 }
 
 if (!defined('PMS_ASSET_VERSION')) {
-    define('PMS_ASSET_VERSION', '20261018v');
+    define('PMS_ASSET_VERSION', '20261018w');
 }
 
 function pms_base_path()
