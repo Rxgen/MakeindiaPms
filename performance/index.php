@@ -13,27 +13,24 @@ require dirname(__DIR__) . '/includes/site_head.php';
 
 <section class="page-content">
   <div class="page-wrap">
-    <div class="stats-container page-stats">
-      <div class="stat-box">
-        <i class="fas fa-coins"></i>
-        <h3><span class="currency">₹</span>770<span class="unit">Cr</span></h3>
-        <div class="line"></div>
-        <p>AUM</p>
-      </div>
-      <div class="stat-box">
-        <i class="fas fa-chart-line"></i>
-        <h3>100<span class="unit">%</span></h3>
-        <div class="line"></div>
-        <p>Equity Fund</p>
-      </div>
-      <div class="stat-box">
-        <i class="fas fa-address-book"></i>
-        <h3>557</h3>
-        <div class="line"></div>
-        <p>Investors</p>
-      </div>
+    <div class="page-stats-row" role="list">
+      <article class="page-stat-card" role="listitem">
+        <span class="page-stat-icon" aria-hidden="true"><i class="fas fa-coins"></i></span>
+        <p class="page-stat-value"><span class="currency">₹</span>770<span class="unit">Cr</span></p>
+        <p class="page-stat-label">AUM</p>
+      </article>
+      <article class="page-stat-card" role="listitem">
+        <span class="page-stat-icon" aria-hidden="true"><i class="fas fa-chart-line"></i></span>
+        <p class="page-stat-value">100<span class="unit">%</span></p>
+        <p class="page-stat-label">Equity Fund</p>
+      </article>
+      <article class="page-stat-card" role="listitem">
+        <span class="page-stat-icon" aria-hidden="true"><i class="fas fa-address-book"></i></span>
+        <p class="page-stat-value">557</p>
+        <p class="page-stat-label">Investors</p>
+      </article>
     </div>
-    <p class="as-on">*As on 20 July 2025</p>
+    <p class="page-as-on">*As on 20 July 2025</p>
 
     <div class="content-block">
       <h2>How we think about returns</h2>

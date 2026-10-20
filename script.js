@@ -258,12 +258,15 @@ if (authBar) {
   window.addEventListener("scroll", update, { passive: true });
 })();
 
-/* Enquiry form: validate + AJAX submit (no page reload) */
+/* Enquiry form: validate + AJAX submit + thank-you popup */
 (function initEnquiryForms() {
   const forms = document.querySelectorAll(".pms-enquiry-form");
   if (!forms.length) {
     return;
   }
+
+  const thanksModal = document.getElementById("enquiryThanksModal");
+  const thanksOk = document.getElementById("enquiryThanksOk");
 
   function digits(value) {
     return String(value || "").replace(/\D+/g, "");
@@ -290,7 +293,57 @@ if (authBar) {
     box.setAttribute("role", ok ? "status" : "alert");
   }
 
+  function openThanksPopup() {
+    if (!thanksModal) {
+      return;
+    }
+    thanksModal.hidden = false;
+    document.body.classList.add("enquiry-thanks-open");
+    if (thanksOk) {
+      thanksOk.focus();
+    }
+  }
+
+  function closeThanksPopup() {
+    if (!thanksModal) {
+      return;
+    }
+    thanksModal.hidden = true;
+    document.body.classList.remove("enquiry-thanks-open");
+  }
+
+  if (thanksModal) {
+    thanksModal.querySelectorAll("[data-enquiry-close]").forEach((el) => {
+      el.addEventListener("click", closeThanksPopup);
+    });
+  }
+  if (thanksOk) {
+    thanksOk.addEventListener("click", closeThanksPopup);
+  }
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && thanksModal && !thanksModal.hidden) {
+      closeThanksPopup();
+    }
+  });
+
   forms.forEach((form) => {
+    const phoneInput = form.querySelector('[name="phone"]');
+    if (phoneInput) {
+      phoneInput.setAttribute("maxlength", "10");
+      phoneInput.setAttribute("inputmode", "numeric");
+      phoneInput.addEventListener("input", () => {
+        const cleaned = digits(phoneInput.value).slice(0, 10);
+        if (phoneInput.value !== cleaned) {
+          phoneInput.value = cleaned;
+        }
+      });
+      phoneInput.addEventListener("paste", (e) => {
+        e.preventDefault();
+        const pasted = digits((e.clipboardData || window.clipboardData).getData("text")).slice(0, 10);
+        phoneInput.value = pasted;
+      });
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -306,7 +359,10 @@ if (authBar) {
       showStatus(form, "", false);
 
       const nameVal = name ? name.value.trim() : "";
-      const phoneVal = phone ? digits(phone.value) : "";
+      const phoneVal = phone ? digits(phone.value).slice(0, 10) : "";
+      if (phone && phone.value !== phoneVal) {
+        phone.value = phoneVal;
+      }
       const emailVal = email ? email.value.trim() : "";
       const messageVal = message ? message.value.trim() : "";
       let err = "";
@@ -314,8 +370,8 @@ if (authBar) {
       if (nameVal.length < 2) {
         err = "Please enter your full name.";
         if (name) name.classList.add("is-invalid");
-      } else if (phoneVal.length < 10 || phoneVal.length > 15) {
-        err = "Please enter a valid phone number (10–15 digits).";
+      } else if (phoneVal.length !== 10) {
+        err = "Please enter a 10-digit mobile number.";
         if (phone) phone.classList.add("is-invalid");
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
         err = "Please enter a valid email address.";
@@ -350,7 +406,6 @@ if (authBar) {
           redirect: "follow",
         });
 
-        // Live may return text/html + BOM before JSON; parse body text safely.
         const rawText = (await res.text()).replace(/^\uFEFF/, "").trim();
         let data = null;
         if (rawText.charAt(0) === "{") {
@@ -364,10 +419,7 @@ if (authBar) {
         if (!data) {
           const finalUrl = String(res.url || "");
           if (/[?&]enquiry=1\b/.test(finalUrl) || /"ok"\s*:\s*true/.test(rawText)) {
-            data = {
-              ok: true,
-              message: "Thanks for your mail. Our team will contact you shortly.",
-            };
+            data = { ok: true };
           } else if (/[?&]enquiry=error\b/.test(finalUrl)) {
             data = {
               ok: false,
@@ -378,11 +430,8 @@ if (authBar) {
 
         if (data && data.ok) {
           form.reset();
-          showStatus(
-            form,
-            data.message || "Thanks for your mail. Our team will contact you shortly.",
-            true
-          );
+          showStatus(form, "", false);
+          openThanksPopup();
         } else {
           showStatus(
             form,

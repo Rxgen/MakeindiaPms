@@ -14,10 +14,9 @@ require_once __DIR__ . '/site_config.php';
       <div class="footer-col footer-col-links">
         <h4>Quick links</h4>
         <ul class="footer-links-grid">
-          <li><a href="<?= pms_h(pms_url('index.php')) ?>">Home</a></li>
-          <li><a href="<?= pms_h(pms_url('about.php')) ?>">About Us</a></li>
+          <li><a href="<?= pms_h(pms_url('about.php')) ?>">About</a></li>
           <li><a href="<?= pms_h(pms_url('who-should-invest.php')) ?>">Who Should Invest</a></li>
-          <li><a href="<?= pms_h(pms_url('investment-philosophy.php')) ?>">Investment Philosophy</a></li>
+          <li><a href="<?= pms_h(pms_url('investment-philosophy.php')) ?>">Philosophy</a></li>
           <li><a href="<?= pms_h(pms_url('performance/')) ?>">Performance</a></li>
           <li><a href="<?= pms_h(pms_url('team/')) ?>">Team</a></li>
           <li><a href="<?= pms_h(pms_url('faq/')) ?>">FAQs</a></li>
@@ -36,7 +35,7 @@ require_once __DIR__ . '/site_config.php';
           <input type="hidden" name="return_to" value="<?= pms_h(pms_url('index.php')) ?>">
           <input type="hidden" name="ajax" value="1">
           <input type="text" name="name" placeholder="Name" required minlength="2" autocomplete="name">
-          <input type="tel" name="phone" placeholder="Phone" required pattern="[0-9+\-\s()]{10,18}" autocomplete="tel">
+          <input type="tel" name="phone" placeholder="Mobile (10 digits)" required maxlength="10" pattern="[0-9]{10}" inputmode="numeric" autocomplete="tel">
           <input type="email" name="email" placeholder="Email" required autocomplete="email">
           <textarea name="message" placeholder="Message (min. 10 characters)" required minlength="10"></textarea>
           <p class="enquiry-field-error" hidden></p>
@@ -49,6 +48,14 @@ require_once __DIR__ . '/site_config.php';
       <p>© <?= date('Y') ?> Make in India Capital PMS. All rights reserved.</p>
     </div>
   </footer>
+  <div class="enquiry-thanks-modal" id="enquiryThanksModal" hidden>
+    <div class="enquiry-thanks-backdrop" data-enquiry-close></div>
+    <div class="enquiry-thanks-dialog" role="dialog" aria-modal="true" aria-labelledby="enquiryThanksTitle">
+      <p class="enquiry-thanks-title" id="enquiryThanksTitle">Thank you</p>
+      <p class="enquiry-thanks-message">Thanks for contacting. Our team will contact you shortly.</p>
+      <button type="button" class="enquiry-thanks-ok" id="enquiryThanksOk">Okay</button>
+    </div>
+  </div>
   <a href="#top" class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">
     <i class="fas fa-arrow-up" aria-hidden="true"></i>
     <span class="back-to-top-text">TOP</span>

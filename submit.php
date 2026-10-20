@@ -119,7 +119,7 @@ $errors = array();
 if ($name === '' || pms_enquiry_len($name) < 2) {
     $errors[] = 'name';
 }
-if ($phoneDigits === '' || strlen($phoneDigits) < 10 || strlen($phoneDigits) > 15) {
+if ($phoneDigits === '' || strlen($phoneDigits) !== 10) {
     $errors[] = 'phone';
 }
 if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {

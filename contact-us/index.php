@@ -42,7 +42,7 @@ require dirname(__DIR__) . '/includes/site_head.php';
         <input type="hidden" name="return_to" value="<?= pms_h(pms_url('contact-us/')) ?>">
         <input type="hidden" name="ajax" value="1">
         <input type="text" name="name" placeholder="Name" required minlength="2" autocomplete="name">
-        <input type="tel" name="phone" placeholder="Phone" required pattern="[0-9+\-\s()]{10,18}" autocomplete="tel">
+        <input type="tel" name="phone" placeholder="Mobile (10 digits)" required maxlength="10" pattern="[0-9]{10}" inputmode="numeric" autocomplete="tel">
         <input type="email" name="email" placeholder="Email" required autocomplete="email">
         <textarea name="message" placeholder="Message (min. 10 characters)" required minlength="10"></textarea>
         <p class="enquiry-field-error" hidden></p>
